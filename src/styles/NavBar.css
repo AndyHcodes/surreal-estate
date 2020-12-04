@@ -1,0 +1,24 @@
+.Nav-bar {
+  background-color: white;
+  border-bottom: grey;
+  text-align: left;
+  padding: 0;
+}
+
+.logo {
+  height: 60px;
+  width: 150px;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-links-item {
+  display: inline-block;
+  margin: 0;
+  padding: 10px;
+  text-decoration: none;
+}
+
+a:link {
+  text-decoration: none;
+}
