@@ -1,0 +1,9 @@
+.alert-success {
+  font-size: 20px;
+  color: rgb(1, 97, 1);
+}
+
+.alert-failure {
+  font-size: 20px;
+  color: red;
+}

@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import Alert from "./Alert";
 import "../styles/AddProperty.css";
 
 function AddProperty() {
@@ -12,17 +14,39 @@ function AddProperty() {
       price: "",
       email: "",
     },
+    alert: {
+      message: "",
+      isSuccess: false,
+    },
   };
 
   const [fields, setFields] = useState(initialState.fields);
 
-  const handleAddProperty = (event) => {
-    event.preventDefault();
-    console.log(fields);
-  };
+  const [alert, setAlert] = useState(initialState.alert);
 
   const handleFieldChange = (event) => {
     setFields({ ...fields, [event.target.name]: event.target.value });
+  };
+
+  const handleAddProperty = async (event) => {
+    event.preventDefault();
+
+    setAlert({ message: "", isSuccess: false });
+
+    await axios
+      .post("http://localhost:3000/api/v1/PropertyListing", fields)
+      .then(() =>
+        setAlert({
+          message: "Property Added",
+          isSuccess: true,
+        })
+      )
+      .catch(() =>
+        setAlert({
+          message: "Server error. Please try again later.",
+          isSuccess: false,
+        })
+      );
   };
 
   return (
@@ -40,7 +64,7 @@ function AddProperty() {
             name="title"
             value={fields.title}
             type="text"
-            placeholder="Add Property"
+            placeholder="Please enter property description"
             onChange={handleFieldChange}
           />
         </label>
@@ -48,11 +72,14 @@ function AddProperty() {
           City
           <select
             id="city"
+            required
             name="city"
             value={fields.city}
             onChange={handleFieldChange}
           >
-            <option value="Manchester">Manchester</option>
+            <option selected="selected" value="Manchester">
+              Manchester
+            </option>
             <option value="Leeds">Leeds</option>
             <option value="Sheffield">Sheffield</option>
             <option value="Liverpool">Liverpool</option>
@@ -62,11 +89,14 @@ function AddProperty() {
           Type of Property
           <select
             id="type"
+            required
             name="type"
             value={fields.type}
             onChange={handleFieldChange}
           >
-            <option value="Flat">Flat</option>
+            <option selected="selected" value="Flat">
+              Flat
+            </option>
             <option value="Detached">Detached</option>
             <option value="Semi-Detached">Semi-Detached</option>
             <option value="Terraced">Terraced</option>
@@ -80,6 +110,7 @@ function AddProperty() {
           <input
             id="bedrooms"
             name="bedrooms"
+            required
             value={fields.bedrooms}
             type="text"
             onChange={handleFieldChange}
@@ -89,6 +120,7 @@ function AddProperty() {
           Bathrooms
           <input
             id="bathrooms"
+            required
             name="bathrooms"
             value={fields.bathrooms}
             type="text"
@@ -99,6 +131,7 @@ function AddProperty() {
           Price
           <input
             id="price"
+            required
             name="price"
             value={fields.price}
             type="text"
@@ -109,15 +142,18 @@ function AddProperty() {
           Email
           <input
             id="email"
+            required
             name="email"
             value={fields.email}
-            type="text"
+            type="email"
+            placeholder="Please enter email address"
             onChange={handleFieldChange}
           />
         </label>
         <button className="add-prop-button" type="submit">
           Add
         </button>
+        <Alert message={alert.message} success={alert.isSuccess} />
       </form>
     </div>
   );

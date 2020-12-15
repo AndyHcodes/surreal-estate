@@ -5,3 +5,7 @@ body {
   padding: 0;
   text-align: center;
 }
+
+.main-title {
+  color: rgb(20, 45, 114);
+}
