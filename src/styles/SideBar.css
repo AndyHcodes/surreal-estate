@@ -1,0 +1,9 @@
+.sidebar {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  text-align: left;
+}
